@@ -1,0 +1,10 @@
+//SCSS는 CSS와 다르게 주석으로 /**/와 js의 // 모두 사용가능하다.
+$color: royalblue;
+
+.container{
+  h1{
+    color: royalblue;
+    background-color: salmon;
+    font-size: 60px;
+  }
+}
