@@ -106,3 +106,120 @@
   font-size:16px;
 }
 ```
+## 중첩된 속성
+- 선택자 끝에 : 블록이 끝난 뒤에 ;를 붙이게 되면 "선택자-"와 같은 네임스페이스가 된다.
+- 네임스페이스 : 이름을 통해 구분 가능한 범위를 만들어내는 것으로 일종의 유효범위를 지정하는 방법을 말한다.
+```scss
+// scss
+.box {
+  font: {
+    weight: bold; //font-weight
+    size: 10px;
+    family: sans-serif;
+  };
+  margin: {
+    top: 10px; //margin-top
+    left: 20px;
+  };
+  padding: {
+    top: 10px; //padding-top
+    bottom: 40px;
+    left: 20px;
+    right: 30px;
+  }
+}
+```
+```css
+/* css */
+.box {
+  font-weight: bold;
+  font-size: 10px;
+  font-family: sans-serif;
+  margin-top: 10px;
+  margin-left:20px;
+  padding-top: 10px;
+  padding-bottom: 40px;
+  padding-left: 20px;
+  padding-right: 30px;
+}
+```
+
+## 변수(Variables)
+- $를 통해 자바스크립트처럼 변수를 만들어 반복적 사용이 가능하다.
+- 최상단에 변수를 지정할 경우 전역변수로 쓸수있고, {}안에 변수를 지정하면 그 안에서만 사용이 가능하다.
+- 재할당이 가능하다. 재할당이 된 이후부터의 범위는 모두 재할당 값이 된다.
+```scss
+// scss
+$size= 100px; //전역변수: 전체범위
+
+.container {
+  &small = 100px; //{}안에서만 사용가능한 변수
+  position: fixed;
+  top: $size; //100px
+
+  .item {
+    &small = 200px; //재할당
+    width: $size; //200px
+    height: $size; //200px
+    transform: translateX($size); //200px
+  }
+  .box {
+    width: $size; // 200px
+  }
+}
+```
+```css
+/* css */
+.container {
+  position: fixed;
+  top: 100px; 
+}
+.container .item {
+  width: 200px;
+  height: 200px;
+  transform: translateX(200px);
+}
+```
+
+## 산술 연산
+- 나누기 연산자는 단축 속성으로 해석될 수 있기 때문에 
+ ()안에 넣어서 사용하거나, $변수를 지정해서 사용 또는 다른 연산과 같이 사용해야한다.
+
+```scss
+// scss
+div{
+  $size= 30px;
+  width: 20px + 20px; //40px
+  height: 40px  - 10px; //30px
+  font-size: 10px * 2; //20px
+  //margin: (30px / 2); //15px
+  margin: $size/2;
+  //margin: (15px + 15px)/2;
+  padding: 20px % 7; //6px
+}
+span {
+  font-size: 10px;
+  line-height: 10px;
+  font: 10px / 10px; 
+  font-family: serif;
+  //단축속성  size / line-height font-family으로 단축해 사용가능
+}
+```
+```css
+/* css */
+div{
+  width: 40px;
+  height: 30px;
+  font-size: 20px;
+  margin: 15px;
+  padding: 6px;
+}
+```
+- 산술연산을 할 때는 기본적인 단위가 동일해야 한다.
+- clac() 사용하면 다른 단위도 출력이 가능한 구조가 된다.
+```scss
+div {
+  width: 100% - 200px; //%와 px는 단위가 다르기 때문에 사용 안된다.
+  height: clac(100% - 200px);//clac를 통해 출력가능해진다.
+}
+```
