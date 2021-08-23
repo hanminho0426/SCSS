@@ -343,6 +343,7 @@ for(let i= 0; i < 10; i+= 1>){ console.log(`loop-${i}`)
 }
 ```
 
+## 함수
 ```scss
 //scss
 // 수직 수평 코드
@@ -376,4 +377,51 @@ for(let i= 0; i < 10; i+= 1>){ console.log(`loop-${i}`)
 }
 ```
 
+## 색상 내장 함수
+- 버튼을 만들 때 유용한 함수
+- mix(색상,색상) 2개의 지정한 색상을 섞어서, 새로운 색상을 만들어낸다. 2개의 인수를 필요로 한다.
+- lighten(색상,퍼센트) 색상을 퍼센트만큼 밝아지게 한다.
+- darken(색상, 퍼센트) 색상을 퍼센트만큼 어둡게 해준다.
+- saturate(색상,퍼센트)
+색상을 퍼센트만큼 채도를 높여준다.
+- desaturate(색상,퍼센트) 색상을 퍼센트만큼 채도를 낮추어 준다.
+- grayscale(색상) 색상을 회색으로 바꾸어 준다.
+- invert(색상) 색상을 반전시켜준다.
+- rgba(색상, 값) 색상의 투명도를 준다.
+```html
+<!-- html -->
+<div class="box"></div>
+<div class="box built-in"></div>
+```
+```scss
+// scss
+.box {
+  $color: royalblue;
+  width: 200px;
+  height: 100px;
+  margin:20px;
+  border-radius: 10px;
+  background-color:  $color;
+  &.hover {
+    background-color: darken($color, 10%);
+  }
+
+  &.built-in {
+    //background-color: mix($color, red); //새로운 색을 만들어낸다.
+    // background-color: lighten($color, 10%)
+    background-color:
+    saturate($color, 10%);
+  }
+}
+```
+## 가져오기 
+- JS는 @import "./파일.js";
+- SCSS는 @import "./파일"; 확장자를 따로 명시하지 않아도 된다.
+- SCSS는 @import "./파일",(쉼표)"./파일" 를 통해 또 새로운 파일을 연결할 수 있다.
+ ```scss
+ @import "./sub", "./sub2";
+ ```
+
+### 리팩토링(Refactoring)
+- '결과의 변경없이 코드의 구조를 재조정함'을 뜻한다.
 
