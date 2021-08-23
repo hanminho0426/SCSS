@@ -274,22 +274,26 @@ div {
 - @mixin은 인수를 제공한다.
 - @mixin을 매개변수를 가지는 하나의 함수처럼 사용 가능하다.
 - 변수의 뒤에 ":값" 넣으면 기본값이 되어진다.
-
+- , 쉼표를 통해 여러가지 변수를 늘려서 사용할 수 있다. 
+- 키워드 인수: 인수를 사용할때 인수 앞에 매개 변수의 이름을 지정하는 것 그 매개변수를 키워드라고 한다.
 ```scss
 // scss
-@mixin box($size: 80px) { //매개변수: 값 -> 기본값
+@mixin box($size: 80pm, $color: tomato) { //매개변수: 값 -> 기본값 // , 쉼표를 통해 여러가지 변수를 늘려서 사용할 수 있다
   width: $size;
   height: $size;
-  background-color: tomato;
+  background-color: $color;
 }
 .container {
-  @include box(200px); //인수
+  @include box(200px, red); //인수
   .item {
-    @include box; //기본값을 사용하는 @mixin은 ()를 넣지 않는다.
+    @include box($color:green); //키워드 인수 
   }
 }
 .box {
   @include box(100px);
+}
+.bottom {
+   @include box; //기본값을 사용하는 @mixin은 ()를 넣지 않는다.
 }
 ```
 ```css
@@ -297,17 +301,79 @@ div {
 .container {
   width: 200px;
   height: 200px;
-  background-color: tomato;
+  background-color: red;
 }
 .container .item {
   width: 80px;
   height: 80px;
-  background-color: tomato;
+  background-color: green;
 }
-
 .box {
   width: 100px;
   height: 100px;
   background-color: tomato;
 }
+.bottom {
+  width: 80px;
+  height: 80px;
+  background-color: tomato;
+}
+
 ```
+## 반복문
+```js
+//js
+//  시작      종료   반복
+for(let i= 0; i < 10; i+= 1>){ console.log(`loop-${i}`)
+} 
+// "loop-1 ~9 까지 반복됨"
+```
+- CSS는 Zero-based 개념이 아니기 때문에 JS와 다르게 1부터 숫자가 매겨진다.
+- from 처음시작 / through 끝
+- JS보관법 ${ } , SCSS보관법 #{ }
+- 선택자에 이용할 경우 보관법을 사용하고 숫자가 매겨지는 곳은 사용하지 않는다.
+
+```scss
+//scss
+//     몇번부터시작  몇번까지에서 끝
+@for $i from 1 through 10 .box:nth-child(#{$i})/*번호매기기*/ {
+  .box {
+    width: 100px * $i; //10번이 반복, 100씩 증가
+  }
+}
+```
+
+```scss
+//scss
+// 수직 수평 코드
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+//JS와 다른게 앞에 @를 붙인다. 
+@function ratio($size, $ratio) {
+  @return $size * $ratio
+}
+
+.box {
+  $width: 100px;
+  width: $width;
+  height: ratio($width, 1/2); //100px * 1/2
+ // height: ratio($width, 9/16); //16:9 비율 계산
+  @include center; 
+}
+```
+```css
+/* css */
+.box {
+  width: 100px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+```
+
+
