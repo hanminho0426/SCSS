@@ -425,3 +425,126 @@ for(let i= 0; i < 10; i+= 1>){ console.log(`loop-${i}`)
 ### 리팩토링(Refactoring)
 - '결과의 변경없이 코드의 구조를 재조정함'을 뜻한다.
 
+### 데이터의 종류
+```scss
+// scss
+$number: 1; // .5, 100px, 1em
+$string: bold; // relative, "../imges/a.png"
+$color: red; //blue, #FFFF00, rgba(0,0,0,.1) //문자 데이터가 아닌 색상데이터로 해석된다.
+$boolean: true; // false
+$null: null;
+$list: orange, royalblue, yellow; //쉼표로 구분해서 순서대로 나열한 것 마치 배열 데이터와 유사하게 생겼다.
+$map: (
+  o: orange,
+  r: royalblue,
+  y: yellow
+); // 객체데이터와 유사하다. 키와 키값의 형태이고 JS는 {}지만 SCSS는 ()사용한다.
+
+.box {
+  width: 100px; //숫자데이터
+  color: red; //색상데이터
+  position: relative; //문자데이터
+}
+```
+
+###@each
+- list
+```scss
+// scss
+$list: orange, royalblue, yellow;
+
+// @로 시작하는 each키워드를 통해서  "$list"라는  변수에 있는 해당 데이터를 반복적으로 "$c"라는 이름의 변수에 담아서 {}사이에서 처리하겠다는 의미
+@each $c in $list {
+  .box {
+    color: $c;
+  }
+} 
+
+```
+```css
+/* css */
+.box {
+  color: orange;
+}
+.box {
+  color: royalblue;
+}
+.box {
+  color: yellow;
+}
+```
+- map
+```scss
+// scss
+$map: (
+  o: orange,
+  r: royalblue,
+  y: yellow
+);
+//    키  밸류
+@each $k, $v in $map {
+  .box-#{$k} {
+    color: $v;
+  }
+} 
+```
+
+```css
+.box-0 {
+  color: orange;
+}
+
+.box-r {
+  color: royalblue;
+}
+
+.box-y {
+  color: yellow;
+}
+```
+
+###@content
+```scss
+@mixin left-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  @content;
+}
+.container {
+  width: 100px;
+  height: 100px;
+  @include left-top;
+}
+
+.box {
+  width: 200px;
+  height: 300px;
+  @include left-top { //{}안에 있는 내용을 @mixin안의 새로운 내용에 추가하는 역할
+    bottom: 0;
+    right: 0;
+    margin: auto;
+  }
+}
+```
+
+```css
+.container {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.box {
+  width: 200px;
+  height: 300px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+```
