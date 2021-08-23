@@ -1,10 +1,43 @@
-//SCSS는 CSS와 다르게 주석으로 /**/와 js의 // 모두 사용가능하다.
-$color: royalblue;
+// //SCSS는 CSS와 다르게 주석으로 /**/와 js의 // 모두 사용가능하다.
+// $color: royalblue;
 
-.container{
-  h1{
-    color: royalblue;
-    background-color: salmon;
-    font-size: 60px;
+// .container{
+//   h1{
+//     color: royalblue;
+//     background-color: salmon;
+//     font-size: 60px;
+//   }
+// }
+
+// .container {
+//   width: 200px;
+//   height: 200px;
+//   background-color: orange;
+//   display:  flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+
+// .container .item {
+//   width: 100px;
+//   height: 100px;
+//   background-color: royalblue;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  @include center;
+  .item {
+    @include center;
   }
+}
+.box {
+  @include center;
 }

@@ -223,3 +223,91 @@ div {
   height: clac(100% - 200px);//clac를 통해 출력가능해진다.
 }
 ```
+## 재활용(Mixins)
+```html
+<!-- html -->
+<div class ="container">
+  <div class="item">
+    Mixin!
+  </div>
+</div>
+```
+```css
+/* css */
+.container {
+  width: 200px;
+  height: 200px;
+  background-color: orange;
+  display:  flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container .item {
+  width: 100px;
+  height: 100px;
+  background-color: royalblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+```
+- @mixin을 이용해 만들어진 구조는  @include 키워드를 통해 재활용해 이용할 수 있다.
+```scss
+// scss
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  @include center;
+  .item {
+    @include center;
+  }
+}
+.box {
+  @include center;
+}
+```
+- @mixin은 인수를 제공한다.
+- @mixin을 매개변수를 가지는 하나의 함수처럼 사용 가능하다.
+- 변수의 뒤에 ":값" 넣으면 기본값이 되어진다.
+
+```scss
+// scss
+@mixin box($size: 80px) { //매개변수: 값 -> 기본값
+  width: $size;
+  height: $size;
+  background-color: tomato;
+}
+.container {
+  @include box(200px); //인수
+  .item {
+    @include box; //기본값을 사용하는 @mixin은 ()를 넣지 않는다.
+  }
+}
+.box {
+  @include box(100px);
+}
+```
+```css
+/* css */
+.container {
+  width: 200px;
+  height: 200px;
+  background-color: tomato;
+}
+.container .item {
+  width: 80px;
+  height: 80px;
+  background-color: tomato;
+}
+
+.box {
+  width: 100px;
+  height: 100px;
+  background-color: tomato;
+}
+```
